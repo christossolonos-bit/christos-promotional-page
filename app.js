@@ -320,6 +320,13 @@
     }
   }
 
+  function agentCopy(product) {
+    const elMap = window.YGIA_AGENTS_EL || {};
+    const lang = window.ygiaI18n?.getLang?.() || "en";
+    if (lang === "el" && elMap[product.id]) return elMap[product.id];
+    return product.agent;
+  }
+
   function explain(product) {
     activeId = product.id;
     guide.classList.add("is-active");
@@ -336,14 +343,14 @@
     guideCta.dataset.content = product.id;
     guideCta.textContent = shopLabel();
     setActiveCard(product.id);
+    const text = agentCopy(product);
     // On mobile collapsed view, show full text instantly (clamped to 2 lines in CSS)
-    // Product agent copy stays English — only page chrome is translated.
     if (isPhone()) {
       clearInterval(typeTimer);
       guideText.classList.remove("is-typing");
-      guideText.textContent = product.agent;
+      guideText.textContent = text;
     } else {
-      typeText(product.agent);
+      typeText(text);
     }
     playVoice(product.audio);
   }
@@ -510,6 +517,14 @@
             : isPhone()
               ? t("guide.tapBar")
               : t("guide.speaking");
+          const text = agentCopy(product);
+          if (isPhone()) {
+            clearInterval(typeTimer);
+            guideText.classList.remove("is-typing");
+            guideText.textContent = text;
+          } else {
+            typeText(text);
+          }
         }
       }
       renderCatalog();
