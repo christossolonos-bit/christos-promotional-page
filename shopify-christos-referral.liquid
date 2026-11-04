@@ -1,0 +1,69 @@
+{% comment %}
+  Christos Solonos referral — OWNER ONLY (no customer banner)
+  -----------------------------------------------------------
+  When a shopper arrives from Christos's promo site (?ref=christos-solonos),
+  this quietly stamps the Shopify cart. Kostas sees it on the order in Admin
+  under Additional details / Cart attributes. Customers see nothing.
+
+  Install:
+  1) Online Store → Themes → Edit code
+  2) Snippets → Add snippet: christos-referral
+  3) Paste this file → Save
+  4) layout/theme.liquid → before </body> add:
+       {% render 'christos-referral' %}
+  5) Save
+{% endcomment %}
+
+<script>
+(function () {
+  var REF = "christos-solonos";
+  var NAME = "Christos Solonos";
+  var KEY = "ygia_ref_christos";
+
+  function params() {
+    try {
+      return new URLSearchParams(window.location.search);
+    } catch (e) {
+      return new URLSearchParams();
+    }
+  }
+
+  function isChristosReferral() {
+    var p = params();
+    var ref = (p.get("ref") || "").toLowerCase();
+    var source = (p.get("utm_source") || "").toLowerCase();
+    var term = (p.get("utm_term") || "").toLowerCase();
+    if (ref === REF || source === REF || term === REF) return true;
+    try {
+      return sessionStorage.getItem(KEY) === "1";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function remember() {
+    try {
+      sessionStorage.setItem(KEY, "1");
+    } catch (e) {}
+  }
+
+  function stampCartForOwner() {
+    // Visible to Kostas on the order only (Admin → order → Additional details)
+    fetch("/cart/update.js", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        attributes: {
+          "Referred by": NAME,
+          "Referral id": REF,
+          "Referral note": "Referral client from Christos Solonos promo site"
+        }
+      })
+    }).catch(function () {});
+  }
+
+  if (!isChristosReferral()) return;
+  remember();
+  stampCartForOwner();
+})();
+</script>

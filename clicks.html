@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YGIA referral click log</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; background: #0c1711; color: #f6f3ec; }
+    h1 { font-size: 1.4rem; }
+    p { color: #a8c4b0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.9rem; }
+    th, td { text-align: left; padding: 0.55rem 0.4rem; border-bottom: 1px solid rgba(255,255,255,.1); vertical-align: top; }
+    th { color: #c9a15b; font-weight: 600; }
+    a { color: #e4c98a; word-break: break-all; }
+    .bar { display: flex; gap: .75rem; flex-wrap: wrap; margin: 1rem 0; }
+    button { background: #c9a15b; border: 0; padding: .55rem .9rem; border-radius: 999px; cursor: pointer; font-weight: 600; }
+    code { background: rgba(255,255,255,.08); padding: .1rem .35rem; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Your referral click log</h1>
+  <p>
+    This browser stores outbound clicks from the promo site (last 500).
+    Use it with Shopify orders that have discount code / <code>ref=christos-solonos</code> to settle commission with Kostas (Christos Solonos referrals).
+  </p>
+  <div class="bar">
+    <button type="button" id="export">Copy JSON</button>
+    <button type="button" id="clear">Clear log</button>
+    <a href="index.html">← Back to site</a>
+  </div>
+  <p id="summary"></p>
+  <table>
+    <thead>
+      <tr><th>When</th><th>Product</th><th>Tracked URL</th></tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <script>
+    const key = "ygia_affiliate_clicks";
+    function load() {
+      const list = JSON.parse(localStorage.getItem(key) || "[]");
+      document.getElementById("summary").textContent = list.length
+        ? `${list.length} click(s) stored in this browser.`
+        : "No clicks yet — open the promo site and click through to a product.";
+      document.getElementById("rows").innerHTML = list
+        .map(
+          (row) => `<tr>
+            <td>${new Date(row.at).toLocaleString()}</td>
+            <td>${row.product || row.content || "—"}</td>
+            <td><a href="${row.url}" target="_blank" rel="noopener">${row.url}</a></td>
+          </tr>`
+        )
+        .join("");
+    }
+    document.getElementById("export").onclick = async () => {
+      const raw = localStorage.getItem(key) || "[]";
+      await navigator.clipboard.writeText(raw);
+      alert("Click log copied.");
+    };
+    document.getElementById("clear").onclick = () => {
+      if (confirm("Clear all stored clicks on this device?")) {
+        localStorage.removeItem(key);
+        load();
+      }
+    };
+    load();
+  </script>
+</body>
+</html>

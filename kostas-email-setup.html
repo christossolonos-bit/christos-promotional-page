@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Kostas — Christos referral (owner only)</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1.2rem 3rem; line-height: 1.55; color: #1c241e; }
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.1rem; margin-top: 1.8rem; }
+    code, .tag { background: #eef3ef; padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.92em; }
+    .box { background: #f6f3ec; border: 1px solid #ddd; border-radius: 12px; padding: 1rem 1.1rem; margin: 1rem 0; }
+    ol { padding-left: 1.2rem; }
+    li { margin: 0.45rem 0; }
+    a { color: #2f5a42; }
+    pre {
+      background: #14261c;
+      color: #e7efe8;
+      padding: 0.9rem 1rem;
+      border-radius: 10px;
+      overflow: auto;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mark referral orders for Kostas (customers see nothing)</h1>
+  <p>
+    Christos’s promo site sends shoppers with <span class="tag">ref=christos-solonos</span>.
+    After you install the snippet below, those orders will show in Shopify Admin that
+    the client was referred by <strong>Christos Solonos</strong>. Shoppers will not see any message.
+  </p>
+
+  <div class="box">
+    <strong>Where you see it:</strong><br />
+    Shopify Admin → Orders → open the order → <em>Additional details</em> / cart attributes<br /><br />
+    <code>Referred by: Christos Solonos</code><br />
+    <code>Referral note: Referral client from Christos Solonos promo site</code>
+  </div>
+
+  <h2>Install once on Shopify</h2>
+  <ol>
+    <li>Open project file <code>shopify-christos-referral.liquid</code></li>
+    <li>Shopify Admin → <strong>Online Store → Themes → Edit code</strong></li>
+    <li><strong>Snippets → Add a new snippet</strong> named <code>christos-referral</code></li>
+    <li>Paste the file contents → Save</li>
+    <li>Open <code>layout/theme.liquid</code></li>
+    <li>Just before <code>&lt;/body&gt;</code> add:</li>
+  </ol>
+  <pre>{% raw %}{% render 'christos-referral' %}{% endraw %}</pre>
+  <ol start="7">
+    <li>Save</li>
+    <li>Test with a promo-site product link, add to cart / place a test order, check Additional details</li>
+  </ol>
+
+  <h2>Optional: email yourself on referral orders</h2>
+  <p>
+    Shopify Flow → Order created → if cart attribute “Referred by” contains Christos Solonos
+    → Send internal email: “Referral client from Christos Solonos”.
+  </p>
+
+  <p><a href="index.html">← Back to promo site</a></p>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0c1711" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>YGIA Natural Health — Clean by Design. Powerful by Formulation.</title>
+  <meta name="description" content="Promotional showcase for YGIA Natural Health: standardized herbal extracts in delayed-release capsules. Hover or tap a product to hear what it’s for." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=shopbtn1" />
+</head>
+<body>
+  <div class="ambient" aria-hidden="true">
+    <div class="ambient__glow ambient__glow--one"></div>
+    <div class="ambient__glow ambient__glow--two"></div>
+    <div class="ambient__grain"></div>
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="YGIA Natural Health home">
+      <img src="https://cdn.shopify.com/s/files/1/2675/6274/files/YGIA_NATURAL_LOGO-01.jpg?height=120&width=240" alt="YGIA Natural Health" />
+    </a>
+    <nav class="nav" id="site-nav">
+      <a href="#products">Products</a>
+      <a href="#standard">The Standard</a>
+      <a href="#founder">Founder</a>
+    </nav>
+    <a class="btn btn--small header-shop" href="https://ygianaturalhealth.com/collections/all-products" target="_blank" rel="noopener" data-affiliate-link="header-shop">Shop YGIA</a>
+    <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero__media" aria-hidden="true">
+        <img
+          src="https://cdn.shopify.com/s/files/1/2675/6274/files/2026WEB_HIGHPOTENCYENZYME-FRONT.png?v=1778497378"
+          alt=""
+          class="hero__bottle hero__bottle--left"
+        />
+        <img
+          src="https://cdn.shopify.com/s/files/1/2675/6274/files/2026WEB_GLP1SUPPORT-FRONT_1.png?v=1778496040"
+          alt=""
+          class="hero__bottle hero__bottle--center"
+        />
+        <img
+          src="https://cdn.shopify.com/s/files/1/2675/6274/files/WEB_2025_LONGEVITY_DELAYED_CAPSULE_1.png?v=1752143667"
+          alt=""
+          class="hero__bottle hero__bottle--right"
+        />
+      </div>
+      <div class="hero__content">
+        <p class="brand-mark">YGIA Natural Health</p>
+        <h1>Clean by Design.<br />Powerful by Formulation.</h1>
+        <p class="hero__lead">
+          Standardized herbal extracts. No fillers. Delayed-release capsules that deliver nature where it matters.
+        </p>
+        <div class="hero__actions">
+          <a class="btn" href="#products">Meet the formulas</a>
+          <a class="btn btn--ghost" href="https://ygianaturalhealth.com/" target="_blank" rel="noopener" data-affiliate-link="hero-shop">Visit the shop</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="products" id="products">
+      <div class="section-intro">
+        <p class="eyebrow">Full YGIA catalogue</p>
+        <h2 class="headline-desktop">Hover a product.<br />Your herbalist guide explains.</h2>
+        <h2 class="headline-mobile">Choose a category.<br />Then tap a product.</h2>
+        <p class="section-copy copy-desktop">
+          All YGIA formulas are here. Hover any bottle and the guide will explain what it’s for — then shop with your tracked referral link.
+        </p>
+        <p class="section-copy copy-mobile">
+          Pick a health category first to keep the list short. Then tap a bottle to hear what it’s for.
+        </p>
+        <div class="catalog-tools">
+          <button type="button" class="category-back" id="category-back" hidden>
+            ← All categories
+          </button>
+          <label class="catalog-search" id="catalog-search-wrap">
+            <span class="visually-hidden">Search products</span>
+            <input id="product-search" type="search" placeholder="Search products…" autocomplete="off" />
+          </label>
+          <div class="catalog-filters" id="product-filters" role="tablist" aria-label="Product categories"></div>
+          <p class="catalog-count" id="product-count"></p>
+        </div>
+      </div>
+
+      <div class="showcase">
+        <aside class="guide" id="guide" aria-live="polite">
+          <button type="button" class="guide__handle" id="guide-toggle" aria-expanded="false" aria-label="Expand guide">
+            <span></span>
+          </button>
+          <div class="guide__top">
+            <div class="guide__avatar" aria-hidden="true">
+              <span class="guide__pulse"></span>
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="1.5" opacity=".35"/>
+                <path d="M32 14c-6.5 0-12 5.2-12 14v2c0 4.4 2.1 8.3 5.4 10.8L22 48h20l-3.4-7.2C41.9 38.3 44 34.4 44 30v-2c0-8.8-5.5-14-12-14z" fill="currentColor" opacity=".9"/>
+                <path d="M26 22c2-3 5-4 6-4s4 1 6 4" stroke="#f3efe6" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="guide__header">
+              <div class="guide__meta">
+                <p class="guide__label">YGIA Guide</p>
+                <p class="guide__status" id="guide-status">Ready when you are</p>
+              </div>
+              <button type="button" class="guide__mute" id="guide-mute" aria-pressed="false" title="Mute voice">Mute</button>
+            </div>
+          </div>
+          <div class="guide__speech">
+            <p class="guide__product" id="guide-product">Welcome</p>
+            <p class="guide__text" id="guide-text">
+              Tap or hover any product and I’ll explain what it’s formulated for — heart, metabolism, calm, longevity, and more.
+            </p>
+          </div>
+          <a class="guide__cta" id="guide-cta" href="https://ygianaturalhealth.com/collections/all-products" target="_blank" rel="noopener">
+            Browse all supplements
+          </a>
+        </aside>
+
+        <div class="product-grid" id="product-grid" role="list"></div>
+      </div>
+    </section>
+
+    <section class="standard" id="standard">
+      <div class="standard__inner">
+        <p class="eyebrow">The YGIA difference</p>
+        <h2>A supplement is only as good as its absorption.</h2>
+        <p class="section-copy">
+          No industry-standard additives. Premium delayed-release capsules. Recyclable amber glass. Formulas built on research, tradition, and repeat results.
+        </p>
+        <ul class="pillars">
+          <li>
+            <strong>Standardized extracts</strong>
+            <span>Potency you can trust — not mystery powders.</span>
+          </li>
+          <li>
+            <strong>Clean-label</strong>
+            <span>No fillers, no artificial elements, plant-based DRCaps.</span>
+          </li>
+          <li>
+            <strong>EU accredited</strong>
+            <span>Approved under EU regulation; HACCP &amp; ISO 9001 lab.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="founder" id="founder">
+      <blockquote>
+        <p>“Let food be thy medicine and medicine be thy food.”</p>
+      </blockquote>
+      <div class="founder__body">
+        <p>
+          Guided by Hippocrates — “Nature does not need teachers” — Costas Argyrides founded YGIA Natural Health on prevention, precise herbal craft, and formulas that move the needle.
+        </p>
+        <p class="founder__name">Costas Argyrides · Herbalist &amp; Naturopath · Cyprus</p>
+      </div>
+    </section>
+
+    <section class="closing">
+      <h2>Ready to feel the difference?</h2>
+      <p>Explore the full range on the official YGIA Natural Health shop.</p>
+      <a class="btn" href="https://ygianaturalhealth.com/" target="_blank" rel="noopener" data-affiliate-link="closing-shop">Go to ygianaturalhealth.com</a>
+    </section>
+  </main>
+
+  <nav class="mobile-dock" aria-label="Mobile shortcuts">
+    <a href="#products">Products</a>
+    <a href="https://ygianaturalhealth.com/collections/all-products" target="_blank" rel="noopener" data-affiliate-link="mobile-dock-shop">Shop</a>
+    <a href="#founder">About</a>
+  </nav>
+
+  <footer class="site-footer">
+    <p>
+      Promotional showcase for
+      <a href="https://ygianaturalhealth.com/" target="_blank" rel="noopener" data-affiliate-link="footer">YGIA Natural Health</a>.
+      Referrals tagged <code>ref=christos-solonos</code> (Christos Solonos).
+      <a href="clicks.html">Click log</a>
+      ·
+      <a href="kostas-email-setup.html">For Kostas: referral order tag</a>
+      · Not medical advice — consult your practitioner.
+    </p>
+  </footer>
+
+  <script src="affiliate.js"></script>
+  <script src="products.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
