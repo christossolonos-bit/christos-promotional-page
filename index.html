@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=shopbtn1" />
+  <link rel="stylesheet" href="styles.css?v=lang1" />
 </head>
 <body>
   <div class="ambient" aria-hidden="true">
@@ -24,11 +24,18 @@
       <img src="https://cdn.shopify.com/s/files/1/2675/6274/files/YGIA_NATURAL_LOGO-01.jpg?height=120&width=240" alt="YGIA Natural Health" />
     </a>
     <nav class="nav" id="site-nav">
-      <a href="#products">Products</a>
-      <a href="#standard">The Standard</a>
-      <a href="#founder">Founder</a>
+      <a href="#products" data-i18n="nav.products">Products</a>
+      <a href="#standard" data-i18n="nav.standard">The Standard</a>
+      <a href="#founder" data-i18n="nav.founder">Founder</a>
     </nav>
-    <a class="btn btn--small header-shop" href="https://ygianaturalhealth.com/collections/all-products" target="_blank" rel="noopener" data-affiliate-link="header-shop">Shop YGIA</a>
+    <div class="header-actions">
+      <button type="button" class="lang-toggle" id="lang-toggle" aria-pressed="false" title="Ελληνικά">
+        <span class="lang-toggle__current">EN</span>
+        <span class="lang-toggle__sep" aria-hidden="true">·</span>
+        <span class="lang-toggle__other">ΕΛ</span>
+      </button>
+      <a class="btn btn--small header-shop" href="https://ygianaturalhealth.com/collections/all-products" target="_blank" rel="noopener" data-affiliate-link="header-shop" data-i18n="nav.shop">Shop YGIA</a>
+    </div>
     <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
       <span></span><span></span><span></span>
     </button>
@@ -55,35 +62,35 @@
       </div>
       <div class="hero__content">
         <p class="brand-mark">YGIA Natural Health</p>
-        <h1>Clean by Design.<br />Powerful by Formulation.</h1>
-        <p class="hero__lead">
+        <h1 data-i18n-html="hero.title">Clean by Design.<br />Powerful by Formulation.</h1>
+        <p class="hero__lead" data-i18n="hero.lead">
           Standardized herbal extracts. No fillers. Delayed-release capsules that deliver nature where it matters.
         </p>
         <div class="hero__actions">
-          <a class="btn" href="#products">Meet the formulas</a>
-          <a class="btn btn--ghost" href="https://ygianaturalhealth.com/" target="_blank" rel="noopener" data-affiliate-link="hero-shop">Visit the shop</a>
+          <a class="btn" href="#products" data-i18n="hero.ctaFormulas">Meet the formulas</a>
+          <a class="btn btn--ghost" href="https://ygianaturalhealth.com/" target="_blank" rel="noopener" data-affiliate-link="hero-shop" data-i18n="hero.ctaShop">Visit the shop</a>
         </div>
       </div>
     </section>
 
     <section class="products" id="products">
       <div class="section-intro">
-        <p class="eyebrow">Full YGIA catalogue</p>
-        <h2 class="headline-desktop">Hover a product.<br />Your herbalist guide explains.</h2>
-        <h2 class="headline-mobile">Choose a category.<br />Then tap a product.</h2>
-        <p class="section-copy copy-desktop">
+        <p class="eyebrow" data-i18n="products.eyebrow">Full YGIA catalogue</p>
+        <h2 class="headline-desktop" data-i18n-html="products.headlineDesktop">Hover a product.<br />Your herbalist guide explains.</h2>
+        <h2 class="headline-mobile" data-i18n-html="products.headlineMobile">Choose a category.<br />Then tap a product.</h2>
+        <p class="section-copy copy-desktop" data-i18n="products.copyDesktop">
           All YGIA formulas are here. Hover any bottle and the guide will explain what it’s for — then shop with your tracked referral link.
         </p>
-        <p class="section-copy copy-mobile">
+        <p class="section-copy copy-mobile" data-i18n="products.copyMobile">
           Pick a health category first to keep the list short. Then tap a bottle to hear what it’s for.
         </p>
         <div class="catalog-tools">
-          <button type="button" class="category-back" id="category-back" hidden>
+          <button type="button" class="category-back" id="category-back" hidden data-i18n="products.backCategories">
             ← All categories
           </button>
           <label class="catalog-search" id="catalog-search-wrap">
-            <span class="visually-hidden">Search products</span>
-            <input id="product-search" type="search" placeholder="Search products…" autocomplete="off" />
+            <span class="visually-hidden" data-i18n="products.searchLabel">Search products</span>
+            <input id="product-search" type="search" placeholder="Search products…" autocomplete="off" data-i18n-placeholder="products.searchPlaceholder" />
           </label>
           <div class="catalog-filters" id="product-filters" role="tablist" aria-label="Product categories"></div>
           <p class="catalog-count" id="product-count"></p>
@@ -106,10 +113,10 @@
             </div>
             <div class="guide__header">
               <div class="guide__meta">
-                <p class="guide__label">YGIA Guide</p>
+                <p class="guide__label" data-i18n="guide.label">YGIA Guide</p>
                 <p class="guide__status" id="guide-status">Ready when you are</p>
               </div>
-              <button type="button" class="guide__mute" id="guide-mute" aria-pressed="false" title="Mute voice">Mute</button>
+              <button type="button" class="guide__mute" id="guide-mute" aria-pressed="false" title="Mute voice" data-i18n="guide.mute">Mute</button>
             </div>
           </div>
           <div class="guide__speech">
@@ -129,23 +136,23 @@
 
     <section class="standard" id="standard">
       <div class="standard__inner">
-        <p class="eyebrow">The YGIA difference</p>
-        <h2>A supplement is only as good as its absorption.</h2>
-        <p class="section-copy">
+        <p class="eyebrow" data-i18n="standard.eyebrow">The YGIA difference</p>
+        <h2 data-i18n="standard.title">A supplement is only as good as its absorption.</h2>
+        <p class="section-copy" data-i18n="standard.copy">
           No industry-standard additives. Premium delayed-release capsules. Recyclable amber glass. Formulas built on research, tradition, and repeat results.
         </p>
         <ul class="pillars">
           <li>
-            <strong>Standardized extracts</strong>
-            <span>Potency you can trust — not mystery powders.</span>
+            <strong data-i18n="standard.p1title">Standardized extracts</strong>
+            <span data-i18n="standard.p1body">Potency you can trust — not mystery powders.</span>
           </li>
           <li>
-            <strong>Clean-label</strong>
-            <span>No fillers, no artificial elements, plant-based DRCaps.</span>
+            <strong data-i18n="standard.p2title">Clean-label</strong>
+            <span data-i18n="standard.p2body">No fillers, no artificial elements, plant-based DRCaps.</span>
           </li>
           <li>
-            <strong>EU accredited</strong>
-            <span>Approved under EU regulation; HACCP &amp; ISO 9001 lab.</span>
+            <strong data-i18n="standard.p3title">EU accredited</strong>
+            <span data-i18n="standard.p3body">Approved under EU regulation; HACCP &amp; ISO 9001 lab.</span>
           </li>
         </ul>
       </div>
@@ -153,31 +160,31 @@
 
     <section class="founder" id="founder">
       <blockquote>
-        <p>“Let food be thy medicine and medicine be thy food.”</p>
+        <p data-i18n="founder.quote">“Let food be thy medicine and medicine be thy food.”</p>
       </blockquote>
       <div class="founder__body">
-        <p>
+        <p data-i18n="founder.body">
           Guided by Hippocrates — “Nature does not need teachers” — Costas Argyrides founded YGIA Natural Health on prevention, precise herbal craft, and formulas that move the needle.
         </p>
-        <p class="founder__name">Costas Argyrides · Herbalist &amp; Naturopath · Cyprus</p>
+        <p class="founder__name" data-i18n="founder.name">Costas Argyrides · Herbalist &amp; Naturopath · Cyprus</p>
       </div>
     </section>
 
     <section class="closing">
-      <h2>Ready to feel the difference?</h2>
-      <p>Explore the full range on the official YGIA Natural Health shop.</p>
-      <a class="btn" href="https://ygianaturalhealth.com/" target="_blank" rel="noopener" data-affiliate-link="closing-shop">Go to ygianaturalhealth.com</a>
+      <h2 data-i18n="closing.title">Ready to feel the difference?</h2>
+      <p data-i18n="closing.copy">Explore the full range on the official YGIA Natural Health shop.</p>
+      <a class="btn" href="https://ygianaturalhealth.com/" target="_blank" rel="noopener" data-affiliate-link="closing-shop" data-i18n="closing.cta">Go to ygianaturalhealth.com</a>
     </section>
   </main>
 
   <nav class="mobile-dock" aria-label="Mobile shortcuts">
-    <a href="#products">Products</a>
-    <a href="https://ygianaturalhealth.com/collections/all-products" target="_blank" rel="noopener" data-affiliate-link="mobile-dock-shop">Shop</a>
-    <a href="#founder">About</a>
+    <a href="#products" data-i18n="dock.products">Products</a>
+    <a href="https://ygianaturalhealth.com/collections/all-products" target="_blank" rel="noopener" data-affiliate-link="mobile-dock-shop" data-i18n="dock.shop">Shop</a>
+    <a href="#founder" data-i18n="dock.about">About</a>
   </nav>
 
   <footer class="site-footer">
-    <p>
+    <p data-i18n-html="footer.html">
       Promotional showcase for
       <a href="https://ygianaturalhealth.com/" target="_blank" rel="noopener" data-affiliate-link="footer">YGIA Natural Health</a>.
       Referrals tagged <code>ref=christos-solonos</code> (Christos Solonos).
@@ -190,6 +197,7 @@
 
   <script src="affiliate.js"></script>
   <script src="products.js"></script>
+  <script src="i18n.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

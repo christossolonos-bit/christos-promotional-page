@@ -21,16 +21,21 @@
     window.matchMedia("(max-width: 768px)").matches ||
     window.matchMedia("(pointer: coarse)").matches;
 
-  const idleCopy = {
-    product: "Welcome",
-    text:
-      welcome.text ||
-      "Browse the full YGIA range. Hover or tap any bottle and I’ll explain what it’s for — in plain language.",
-    status: "Ready when you are",
-    url: "https://ygianaturalhealth.com/collections/all-products",
-    cta: "Browse all supplements",
-    audio: welcome.audio || null,
-  };
+  const t = (key, vars) =>
+    typeof window.ygiaI18n?.t === "function"
+      ? window.ygiaI18n.t(key, vars)
+      : key;
+
+  function idleCopy() {
+    return {
+      product: t("guide.welcome"),
+      text: t("guide.welcomeText"),
+      status: t("guide.ready"),
+      url: "https://ygianaturalhealth.com/collections/all-products",
+      cta: t("guide.ctaAll"),
+      audio: welcome.audio || null,
+    };
+  }
 
   const player = new Audio();
   player.preload = "auto";
@@ -132,13 +137,20 @@
   function renderCategoryPicker() {
     const counts = categoryCounts();
     if (countEl) {
-      countEl.textContent = `${categoryTags.length} categories · ${products.length} products`;
+      countEl.textContent = t("products.countCategories", {
+        n: categoryTags.length,
+        p: products.length,
+      });
     }
 
     grid.classList.add("is-categories");
     grid.innerHTML = categoryTags
       .map((tag) => {
         const sample = products.find((product) => product.tag === tag);
+        const countLabel =
+          counts[tag] === 1
+            ? t("products.productOne")
+            : t("products.productMany", { n: counts[tag] });
         return `
       <button type="button" class="category-card" data-tag="${tag}">
         <div class="category-card__image">
@@ -146,9 +158,7 @@
         </div>
         <div class="category-card__copy">
           <h3 class="category-card__name">${tag}</h3>
-          <p class="category-card__count">${counts[tag]} product${
-            counts[tag] === 1 ? "" : "s"
-          }</p>
+          <p class="category-card__count">${countLabel}</p>
         </div>
         <span class="category-card__chevron" aria-hidden="true">→</span>
       </button>`;
@@ -176,10 +186,11 @@
 
     if (countEl) {
       countEl.textContent = activeTag
-        ? `${list.length} in ${activeTag}`
-        : `${list.length} of ${products.length} products`;
+        ? t("products.countIn", { n: list.length, tag: activeTag })
+        : t("products.countOf", { n: list.length, p: products.length });
     }
 
+    const shopText = shopLabel();
     grid.innerHTML = list.length
       ? list
           .map(
@@ -188,7 +199,7 @@
         <button
           class="product__main"
           type="button"
-          aria-label="Explain ${product.name}"
+          aria-label="${t("products.explain", { name: product.name })}"
         >
           <div class="product__image">
             <img src="${product.image}" alt="${product.name}" loading="lazy" />
@@ -204,11 +215,11 @@
           rel="noopener"
           data-product="${product.name.replace(/"/g, "&quot;")}"
           data-content="${product.id}"
-        >View on YGIA shop</a>
+        >${shopText}</a>
       </article>`
           )
           .join("")
-      : `<p class="catalog-count">No products match that search.</p>`;
+      : `<p class="catalog-count">${t("products.empty")}</p>`;
 
     bindProductEvents();
   }
@@ -230,7 +241,7 @@
   }
 
   function shopLabel() {
-    return isPhone() ? "Open this product" : "View on YGIA shop";
+    return isPhone() ? t("products.openProduct") : t("products.viewShop");
   }
 
   function typeText(text) {
@@ -275,7 +286,7 @@
     const playPromise = player.play();
     if (playPromise && typeof playPromise.catch === "function") {
       playPromise.catch(() => {
-        guideStatus.textContent = "Tap a product to enable voice";
+        guideStatus.textContent = t("guide.enableVoice");
         guide.classList.remove("is-speaking");
       });
     }
@@ -304,7 +315,7 @@
       guideToggle.setAttribute("aria-expanded", expanded ? "true" : "false");
       guideToggle.setAttribute(
         "aria-label",
-        expanded ? "Collapse guide" : "Expand guide"
+        expanded ? t("guide.collapse") : t("guide.expand")
       );
     }
   }
@@ -315,10 +326,10 @@
     // On phones keep the sheet compact; viewer expands it manually.
     if (isPhone()) setGuideExpanded(false);
     guideStatus.textContent = muted
-      ? "Muted"
+      ? t("guide.muted")
       : isPhone()
-        ? "Tap bar for full guide"
-        : "Speaking…";
+        ? t("guide.tapBar")
+        : t("guide.speaking");
     guideProduct.textContent = product.name;
     guideCta.href = tracked(product.url, product.id);
     guideCta.dataset.product = product.name;
@@ -326,6 +337,7 @@
     guideCta.textContent = shopLabel();
     setActiveCard(product.id);
     // On mobile collapsed view, show full text instantly (clamped to 2 lines in CSS)
+    // Product agent copy stays English — only page chrome is translated.
     if (isPhone()) {
       clearInterval(typeTimer);
       guideText.classList.remove("is-typing");
@@ -337,23 +349,24 @@
   }
 
   function resetGuide() {
+    const idle = idleCopy();
     activeId = null;
     guide.classList.remove("is-active");
     if (isPhone()) setGuideExpanded(false);
-    guideStatus.textContent = idleCopy.status;
-    guideProduct.textContent = idleCopy.product;
-    guideCta.href = tracked(idleCopy.url, "all-products");
+    guideStatus.textContent = idle.status;
+    guideProduct.textContent = idle.product;
+    guideCta.href = tracked(idle.url, "all-products");
     guideCta.dataset.product = "All products";
     guideCta.dataset.content = "all-products";
-    guideCta.textContent = idleCopy.cta;
+    guideCta.textContent = idle.cta;
     setActiveCard(null);
     stopVoice();
     typeText(
       isPhone()
         ? activeTag
-          ? "Tap a product in this category and I’ll explain what it’s for."
-          : "Choose a category first — then tap a product and I’ll explain it."
-        : idleCopy.text
+          ? t("guide.tapProduct")
+          : t("guide.pickCategory")
+        : idle.text
     );
   }
 
@@ -413,12 +426,12 @@
 
     player.addEventListener("ended", () => {
       guide.classList.remove("is-speaking");
-      if (activeId) guideStatus.textContent = "Explanation complete";
+      if (activeId) guideStatus.textContent = t("guide.complete");
     });
 
     player.addEventListener("error", () => {
       guide.classList.remove("is-speaking");
-      if (activeId) guideStatus.textContent = "Voice file missing — text only";
+      if (activeId) guideStatus.textContent = t("guide.voiceMissing");
     });
 
     if (muteBtn) {
@@ -426,16 +439,16 @@
         muted = !muted;
         player.muted = muted;
         muteBtn.setAttribute("aria-pressed", muted ? "true" : "false");
-        muteBtn.textContent = muted ? "Unmute" : "Mute";
+        muteBtn.textContent = muted ? t("guide.unmute") : t("guide.mute");
         if (muted) {
           stopVoice();
           guideStatus.textContent = activeId
-            ? "Voice muted — reading…"
-            : idleCopy.status;
+            ? t("guide.voiceMuted")
+            : idleCopy().status;
         } else if (activeId) {
           const product = products.find((item) => item.id === activeId);
           if (product) playVoice(product.audio);
-          guideStatus.textContent = "Speaking…";
+          guideStatus.textContent = t("guide.speaking");
         }
       });
     }
@@ -446,10 +459,10 @@
       setGuideExpanded(next);
       if (activeId) {
         guideStatus.textContent = muted
-          ? "Muted"
+          ? t("guide.muted")
           : next
-            ? "Speaking…"
-            : "Tap bar for full guide";
+            ? t("guide.speaking")
+            : t("guide.tapBar");
       }
     }
 
@@ -468,17 +481,39 @@
         const open = !siteNav.classList.contains("is-open");
         siteNav.classList.toggle("is-open", open);
         menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
-        menuToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        menuToggle.setAttribute(
+          "aria-label",
+          open ? t("menu.close") : t("menu.open")
+        );
       });
 
       siteNav.querySelectorAll("a").forEach((link) => {
         link.addEventListener("click", () => {
           siteNav.classList.remove("is-open");
           menuToggle.setAttribute("aria-expanded", "false");
-          menuToggle.setAttribute("aria-label", "Open menu");
+          menuToggle.setAttribute("aria-label", t("menu.open"));
         });
       });
     }
+
+    window.addEventListener("ygia:lang", () => {
+      if (muteBtn) {
+        muteBtn.textContent = muted ? t("guide.unmute") : t("guide.mute");
+      }
+      if (!activeId) resetGuide();
+      else {
+        const product = products.find((item) => item.id === activeId);
+        if (product) {
+          guideCta.textContent = shopLabel();
+          guideStatus.textContent = muted
+            ? t("guide.muted")
+            : isPhone()
+              ? t("guide.tapBar")
+              : t("guide.speaking");
+        }
+      }
+      renderCatalog();
+    });
 
     document.addEventListener(
       "pointerdown",
