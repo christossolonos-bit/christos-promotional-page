@@ -26,14 +26,19 @@
       ? window.ygiaI18n.t(key, vars)
       : key;
 
+  function lang() {
+    return window.ygiaI18n?.getLang?.() || "en";
+  }
+
   function idleCopy() {
+    const greek = lang() === "el";
     return {
       product: t("guide.welcome"),
       text: t("guide.welcomeText"),
       status: t("guide.ready"),
       url: "https://ygianaturalhealth.com/collections/all-products",
       cta: t("guide.ctaAll"),
-      audio: welcome.audio || null,
+      audio: greek ? "audio/el/welcome.mp3" : welcome.audio || null,
     };
   }
 
@@ -322,9 +327,13 @@
 
   function agentCopy(product) {
     const elMap = window.YGIA_AGENTS_EL || {};
-    const lang = window.ygiaI18n?.getLang?.() || "en";
-    if (lang === "el" && elMap[product.id]) return elMap[product.id];
+    if (lang() === "el" && elMap[product.id]) return elMap[product.id];
     return product.agent;
+  }
+
+  function voiceSrc(product) {
+    if (lang() === "el") return `audio/el/${product.id}.mp3`;
+    return product.audio;
   }
 
   function explain(product) {
@@ -352,7 +361,7 @@
     } else {
       typeText(text);
     }
-    playVoice(product.audio);
+    playVoice(voiceSrc(product));
   }
 
   function resetGuide() {
@@ -454,7 +463,7 @@
             : idleCopy().status;
         } else if (activeId) {
           const product = products.find((item) => item.id === activeId);
-          if (product) playVoice(product.audio);
+          if (product) playVoice(voiceSrc(product));
           guideStatus.textContent = t("guide.speaking");
         }
       });
@@ -525,6 +534,7 @@
           } else {
             typeText(text);
           }
+          if (!muted) playVoice(voiceSrc(product));
         }
       }
       renderCatalog();
